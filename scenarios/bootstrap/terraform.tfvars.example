@@ -1,0 +1,25 @@
+# Copy this file to terraform.tfvars and fill in your values.
+# terraform.tfvars is gitignored; never commit your real values.
+
+# ---- Required: subscription / tenant ----
+subscription_id = "00000000-0000-0000-0000-000000000000"
+tenant_id       = "11111111-1111-1111-1111-111111111111"
+
+# ---- Required: Fabric capacity GUID (NOT the Azure ARM resource ID) ----
+# Find it via:
+#   az rest --method GET --url 'https://api.fabric.microsoft.com/v1/capacities' \
+#     --resource 'https://api.fabric.microsoft.com' | jq '.value[] | {name: .displayName, id: .id}'
+fabric_capacity_id = "00000000-0000-0000-0000-000000000000"
+
+# ---- Required: Azure resource naming ----
+resource_group_name   = "rg-striim-fabric"          # must not already exist
+location              = "eastus"                    # must match Fabric capacity region
+storage_account_name  = "stsfabricyourname"         # 3-24 lowercase alphanumeric, globally unique
+app_registration_name = "striim-fabric-spn"         # Entra ID app display name
+
+# ---- Required: Fabric workspace + warehouse to create ----
+fabric_workspace_name = "striim-fabric-ws"          # display name for the new Fabric workspace
+fabric_warehouse_name = "striimwh"                  # display name for the new warehouse inside it
+
+# ---- Required: Private Link Service name ----
+pls_resource_name = "pls-striim-fabric"             # Microsoft.Fabric/privateLinkServicesForFabric name
